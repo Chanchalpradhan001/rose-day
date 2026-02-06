@@ -589,7 +589,7 @@ window.addEventListener('load', async () => {
 </head>
 <body>
   
-<div class="rose">
+<div class="rose" id="rose">
   <div class="petal"></div>
   <div class="petal"></div>
   <div class="petal"></div>
@@ -676,7 +676,7 @@ window.addEventListener('load', async () => {
 </div>
 
 <div style="display: none;">
-  <audio autoplay="" loop="" controls="">
+  <audio id="roseSong" loop>
     <source src="https://heyyouu.netlify.app/song.mp3" type="audio/mp3">
   </audio>
 </div>
@@ -694,6 +694,29 @@ function toggleInfo() {
         button.textContent = 'ℹ️ Rose Day Info';
     }
 }
+</script>
+<script>
+(function(){
+  const roseEl = document.getElementById('rose') || document.querySelector('.rose');
+  const audioEl = document.getElementById('roseSong');
+  const promptEl = document.getElementById('prompt');
+  if (roseEl && audioEl) {
+    roseEl.addEventListener('click', async () => {
+      try {
+        if (audioEl.paused) {
+          await audioEl.play();
+          if (promptEl) promptEl.textContent = 'Playing... ✨';
+        } else {
+          audioEl.pause();
+          audioEl.currentTime = 0;
+          if (promptEl) promptEl.textContent = 'Touch the rose';
+        }
+      } catch (e) {
+        if (promptEl) promptEl.textContent = 'Tap to enable sound';
+      }
+    });
+  }
+})();
 </script>
 </body>
 
