@@ -38,40 +38,6 @@ p{
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
-
-<script>
-// Try to autoplay the song on page load. Browsers may block autoplay with sound;
-// fallback: try muted autoplay, then attempt to unmute after a short delay.
-window.addEventListener('load', async () => {
-  const audio = document.getElementById('roseSong');
-  if (!audio) return;
-
-  // Prefer playsInline for mobile.
-  try { audio.playsInline = true; } catch(e) {}
-
-  try {
-    await audio.play();
-    // playing succeeded with sound
-    return;
-  } catch (err) {
-    // autoplay with sound likely blocked. Try muted autoplay.
-    try {
-      audio.muted = true;
-      await audio.play();
-      // If muted autoplay succeeded, try to unmute after a short delay.
-      setTimeout(() => {
-        try {
-          audio.muted = false;
-        } catch (e) {}
-      }, 2000);
-    } catch (e) {
-      // still failed; nothing more we can do automatically due to browser policies.
-      // Optionally we could show a small control to let the user enable audio.
-      console.warn('Autoplay blocked; user interaction required to play audio.');
-    }
-  }
-});
-</script>
 }
 .rose + span {
   position: absolute;
